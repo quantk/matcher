@@ -1,0 +1,14 @@
+{
+    "name": "quantick/matcher",
+    "description": "Matcher for external entities",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander",
+            "email": "mail@kladov.xyz"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
