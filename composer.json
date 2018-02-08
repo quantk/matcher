@@ -9,7 +9,6 @@
             "email": "mail@kladov.xyz"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "doctrine/orm": "^2.5.11"
     },
