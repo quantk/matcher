@@ -51,6 +51,23 @@ class Matcher
     }
 
     /**
+     * @param $classOrObject
+     *
+     * @return string
+     * @throws \Exception
+     */
+    private function getRealClass($classOrObject)
+    {
+        if (is_object($classOrObject)) {
+            return ClassUtils::getRealClass(get_class($classOrObject));
+        } elseif (is_string($classOrObject)) {
+            return ClassUtils::getRealClass($classOrObject);
+        } else {
+            throw new \Exception('Wrong argument type. Argument of method getRealClass should be object or string class.');
+        }
+    }
+
+    /**
      * @param $entity
      * @param $outerSystem
      * @param $outerClass
@@ -103,7 +120,7 @@ class Matcher
         $outerId
     )
     {
-        $matched = $this->matchOuter($innerEntity->getId(), get_class($innerEntity), $outerSystem);
+        $matched = $this->matchOuter($innerEntity->getId(), $this->getRealClass($innerEntity), $outerSystem);
         if ($this->isDeleted($innerEntity) && $matched) {
             $matched->setDeletedAt($innerEntity->getDeletedAt());
         }
@@ -113,7 +130,7 @@ class Matcher
              */
             $matched = new Matched();
             $matched->setInnerId($innerEntity->getId());
-            $matched->setInnerClass(get_class($innerEntity));
+            $matched->setInnerClass($this->getRealClass($innerEntity));
             $matched->setOuterSystemId($outerSystem);
             $matched->setOuterClass($outerClass);
             $matched->setOuterId($outerId);
@@ -134,7 +151,7 @@ class Matcher
         $outerSystem
     )
     {
-        $matched = $this->matchOuter($innerEntity->getId(), get_class($innerEntity), $outerSystem);
+        $matched = $this->matchOuter($innerEntity->getId(), $this->getRealClass($innerEntity), $outerSystem);
         return $matched instanceof Matched ? true : false;
     }
 
